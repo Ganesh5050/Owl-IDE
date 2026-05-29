@@ -15,16 +15,13 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  esbuild: mode === "production" ? {
+    drop: ["console", "debugger"],
+  } : {},
   build: {
     // Optimize build output
     target: "esnext",
-    minify: "terser",
-    terserOptions: {
-      compress: {
-        drop_console: true, // Remove console.logs in production
-        drop_debugger: true,
-      },
-    },
+    minify: "esbuild",
     rollupOptions: {
       output: {
         manualChunks: {
